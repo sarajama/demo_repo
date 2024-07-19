@@ -6,7 +6,7 @@ name: Workflow 2
 #       - master  # we can Adjust the branch as per your requirements
 
 on:
-  workflow_dispatch:  # for Manual trigger
+  workflow_dispatch:  # for Manual trigger for test run check##########
   # push:
   #   branches:
   #     - dev
