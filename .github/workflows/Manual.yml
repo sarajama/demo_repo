@@ -1,0 +1,98 @@
+# name: Workflow 1
+
+# on:
+#   workflow_dispatch:  
+#   # push:
+#   #   branches:
+#   #     - dev
+#   # pull_request:
+#   #    branches:
+#   #     - dev 
+
+# # concurrency:
+# #   group: ci_workflow_group
+# #   cancel-in-progress: false
+  
+# # concurrency:
+# #   group: ${{ github.workflow }}-${{ github.ref }}
+# #   cancel-in-progress: true
+# # concurrency:
+# #   group: ci-${{ github.ref }}
+# #   cancel-in-progress: false
+
+# jobs:
+#   # build:
+#   #   runs-on: ubuntu-latest
+#   #   steps:
+#   #     - name: Check for lock file
+#   #       run: |
+#   #         if [ -f lock ]; then
+#   #           echo "Lock file found, waiting for it to be released."
+#   #           ls -ltr  # List files for debugging
+#   #           exit 1   # Exit with error to stop workflow
+#   #         else
+#   #           echo "No lock file found, proceeding."
+#   #           touch lock  # Create the lock file
+#   #           ls -ltr  # List files for debugging
+#   #         fi
+#   job1:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Step 1
+#         run: |
+#          echo "This is Workflow 1 - Job 1"
+#          sleep 60 
+
+#   job2:
+#     runs-on: ubuntu-latest
+#     needs: job1
+#     steps:
+#       - name: Step 1
+#         run: echo "This is Workflow 1 - Job 2"
+        
+
+#       # - name: Remove lock file
+#       #   run: |
+#       #     if [ -f lock ]; then
+#       #       rm lock  # Remove the lock file if it exists
+#       #     else
+#       #       echo "No lock file to remove."
+#       #     fi
+        
+
+
+  
+name: Manual Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    concurrency: 
+      group: build-group
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      # Add your build steps here
+      - name: Build
+        run: echo "Building project"
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1
+        run: |
+         echo "This is Workflow 1 - Job 1"
+         sleep 60 
+
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
+    steps:
+      - name: Step 1
+        run: echo "This is Workflow 1 - Job 2"
